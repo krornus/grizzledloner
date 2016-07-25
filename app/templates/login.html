@@ -1,0 +1,16 @@
+{% extends "shared.html" %}
+
+{% block content %}
+  <h1>Log In</h1>
+  {% if error %}
+  
+  <h3>Invalid Username or Password!</h3>
+  {% endif %}
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      Username: {{ form.username() }}
+      <br/>
+      Password: {{ form.password() }}
+      <p><input type="submit" value="Log In"></p>
+  </form>
+{% endblock %}
