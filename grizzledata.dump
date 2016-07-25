@@ -1,0 +1,281 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: account; Type: TABLE; Schema: public; Owner: spowell
+--
+
+CREATE TABLE account (
+    userid text NOT NULL,
+    passwd text NOT NULL
+);
+
+
+ALTER TABLE account OWNER TO spowell;
+
+--
+-- Name: queue; Type: TABLE; Schema: public; Owner: spowell
+--
+
+CREATE TABLE queue (
+    id integer NOT NULL,
+    movieid text NOT NULL,
+    userid text NOT NULL,
+    queueid uuid,
+    name text NOT NULL
+);
+
+
+ALTER TABLE queue OWNER TO spowell;
+
+--
+-- Name: queue_id_seq; Type: SEQUENCE; Schema: public; Owner: spowell
+--
+
+CREATE SEQUENCE queue_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE queue_id_seq OWNER TO spowell;
+
+--
+-- Name: queue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: spowell
+--
+
+ALTER SEQUENCE queue_id_seq OWNED BY queue.id;
+
+
+--
+-- Name: queuedata; Type: TABLE; Schema: public; Owner: spowell
+--
+
+CREATE TABLE queuedata (
+    userid text,
+    name text,
+    queueid uuid NOT NULL
+);
+
+
+ALTER TABLE queuedata OWNER TO spowell;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: spowell
+--
+
+ALTER TABLE ONLY queue ALTER COLUMN id SET DEFAULT nextval('queue_id_seq'::regclass);
+
+
+--
+-- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: spowell
+--
+
+COPY account (userid, passwd) FROM stdin;
+krornus	a8dc1a4231ead55281f65877a6fdfb36
+test3	d9bb4453d8a1e1e2c4a3f2479368ceb3
+\.
+
+
+--
+-- Data for Name: queue; Type: TABLE DATA; Schema: public; Owner: spowell
+--
+
+COPY queue (id, movieid, userid, queueid, name) FROM stdin;
+35	tt0072443	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+36	tt0078748	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+37	tt0083658	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+38	tt0062622	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+39	tt0780504	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+40	tt0477348	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+42	tt0052357	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+43	tt0110413	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+44	tt0266697	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+45	tt0208092	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+46	tt0364569	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+47	tt0106308	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+52	tt0361748	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+53	tt0137523	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+54	tt0088763	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+55	tt0110912	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+57	tt0057012	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+58	tt0151804	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+59	tt0081398	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+61	tt0068646	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+62	tt0064116	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+63	tt0080684	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+64	tt0047478	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+65	tt0102926	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+66	tt0114814	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+67	tt0245429	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+68	tt0054215	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+69	tt0407887	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+70	tt2582802	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+71	tt1853728	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+72	tt0105236	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+73	tt0075314	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+74	tt0338013	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+75	tt0086879	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+76	tt0114709	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+77	tt0053604	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+78	tt0119217	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+79	tt0041959	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+80	tt0071315	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+81	tt0057115	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+82	tt0097165	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+83	tt0457430	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+84	tt0434409	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+85	tt0317705	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+86	tt0117951	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+87	tt0116282	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+88	tt0061512	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+89	tt0469494	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+90	tt1392190	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+91	tt1130884	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+92	tt0093779	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+93	tt0246578	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+94	tt0114746	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+95	tt3659388	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+96	tt1220719	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+97	tt2015381	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+98	tt1504320	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+99	tt0119698	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+100	tt0033467	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+102	tt2802144	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+103	tt0780536	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+104	tt1596363	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+105	tt0107290	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+106	tt0093409	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+107	tt0266308	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+108	tt0365748	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+109	tt0090728	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+110	tt1465522	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+111	tt0113326	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+113	tt2562232	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+114	tt0190332	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+116	tt0160611	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+117	tt0119094	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+119	tt0106611	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+120	tt0091042	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+121	tt0446029	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+122	tt0119116	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+123	tt1074638	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+124	tt0092099	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+125	tt0470752	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+127	tt0082340	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+128	tt1638355	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+130	tt0059800	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+131	tt0096764	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+132	tt0084726	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+133	tt0286112	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+134	tt0097493	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+135	tt1250777	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+136	tt0120382	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+137	tt0061722	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+138	tt0067355	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+139	tt0988045	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+140	tt0190590	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+141	tt0060196	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+142	tt0094721	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+143	tt0064115	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+144	tt1343727	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+145	tt0080455	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+146	tt0082971	krornus	24827466-fbf4-4263-8339-6306adefa81d	queue1
+\.
+
+
+--
+-- Name: queue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: spowell
+--
+
+SELECT pg_catalog.setval('queue_id_seq', 173, true);
+
+
+--
+-- Data for Name: queuedata; Type: TABLE DATA; Schema: public; Owner: spowell
+--
+
+COPY queuedata (userid, name, queueid) FROM stdin;
+\.
+
+
+--
+-- Name: account_userid_key; Type: CONSTRAINT; Schema: public; Owner: spowell
+--
+
+ALTER TABLE ONLY account
+    ADD CONSTRAINT account_userid_key UNIQUE (userid);
+
+
+--
+-- Name: queue_movieid_key; Type: CONSTRAINT; Schema: public; Owner: spowell
+--
+
+ALTER TABLE ONLY queue
+    ADD CONSTRAINT queue_movieid_key UNIQUE (movieid);
+
+
+--
+-- Name: queue_pkey; Type: CONSTRAINT; Schema: public; Owner: spowell
+--
+
+ALTER TABLE ONLY queue
+    ADD CONSTRAINT queue_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: queuedata_queueid_key; Type: CONSTRAINT; Schema: public; Owner: spowell
+--
+
+ALTER TABLE ONLY queuedata
+    ADD CONSTRAINT queuedata_queueid_key UNIQUE (queueid);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
