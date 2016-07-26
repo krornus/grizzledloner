@@ -10,7 +10,7 @@ def user_queues(userid):
     cur.execute(query, [userid])
     return cur.fetchall()
 
-def add_movie(movieid, userid, queueid, name):
+def add_movie(movieid, userid, queueid, name)
     query = "INSERT INTO queue (movieid, userid, queueid, name) VALUES (%s, %s, %s, %s)"
     cur.execute(query, (movieid, userid, queueid, name))
     con.commit()
