@@ -1,65 +1,95 @@
-from flask import Flask, url_for, render_template, redirect, session, request
 import requests
-from forms import *
 import psycopg2
+from flask import url_for, render_template, redirect, session, request
+from forms import *
 from app import app
-from uuid import uuid4
 from model import *
 
+@app.route('/index', methods=["GET", "POST"])
 @app.route('/', methods=["GET", "POST"])
 def index(): 
-    form = MovieForm()
 
-    do_garbage = []
-    if form.validate_on_submit():
-        r = requests.get("http://www.omdbapi.com/?s=%s" % form.search.data)
-        if r.status_code == 200:
-            json = r.json()
-            if json and "Search" in json:
-                json = json['Search']
-                add_movie(
-                    json[0]['imdbID'], 
-                    session['username'], 
-                    "24827466-fbf4-4263-8339-6306adefa81d",
-                    "queue1")
+	movies = get_movies()
+	posters = [(x['poster'], x['imdbid']) for x in movies]
 
-            return redirect(url_for("index"))
+	form = MovieForm(request.form)
+	return render_template('index.html', title="Home", posters=cleanse_posters(posters), search_form=form)
 
-    movies = []
-    for queue in user_queues(session['username']):
-        for row in get_queue(queue[0]):
-            r = requests.get("http://www.omdbapi.com/?i=%s" % row[1])
-            try:
-                movies.append(r.json()['Poster'])
-            except:
-                pass
 
-    return render_template('index.html', title="Home", form=form, movies=movies)
+@app.route('/add', methods=["GET", "POST"])
+def add():
+	movie_id = request.args.get("id")
+	if not movie_id:
+		return redirect(url_for("index"))
 
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        
-        if validate_passwd(form.username.data, form.password.data):
-            session['username'] = form.username.data
-            session['logged'] = True
-            return redirect(url_for("index"))
+	url = "http://www.omdbapi.com/?i={}&plot=full&r=json".format(movie_id)
+	res = requests.get(url)
+	
+	json_data = res.json()
+	
+	if not json_data:
+		return redirect(url_for("index"))
+
+	add_movie(json_data)
+
+
+	return redirect(url_for("index"))
+
+@app.route('/search', methods=["POST"])
+def search():
+	form = MovieForm(request.form)
+	query = form.search.data
+
+	url = "http://www.omdbapi.com/?s={}&r=json&page={}".format(query, 1)
+	
+	res = requests.get(url)
+	posters = []
+
+
+	json_data = res.json() or {"Search":[]}
+	posters = [(x['Poster'], x['imdbID']) for x in json_data["Search"]]
+
+	
+	
+	return render_template("search.html", 
+			query=query,
+			title="Search Results - {}".format(query), 
+			search_form=form, 
+			posters=posters)
+
+
+@app.route("/movie", methods=["GET", "POST"])
+def movie():
+	form = PosterForm()
+	movie_id = request.args.get("id") or None
+
+	if not movie_id:
+		return redirect(url_for("index"))
+
+	movie = get_movie(movie_id)
+	movie['actors'] = movie['actors'].decode("utf-8")
+	movie['title'] = movie['title'].decode("utf-8")
+	movie['plot'] = movie['plot'].decode("utf-8")
+	movie['director'] = movie['director'].decode("utf-8")
+
+	return render_template("movie.html", movie=movie, form=form)
+
+
+
+@app.route("/update_poster", methods=["POST"])
+def update_poster():
+
+    form = PosterForm(request.form)
+    set_poster(form.url.data, form.imdbid.data)
+
+    return redirect(url_for("movie", id=form.imdbid.data))
+    
+def cleanse_posters(posters):
+    result = []
+    for x in posters:
+        if x[0] == "N/A":
+            result.append([url_for("static", filename="no_poster.png"), x[1]])
         else:
-            return redirect(url_for("login", error=True))
+            result.append([x[0], x[1]])
+    return result 
 
-    return render_template("login.html", title="Log In", form=form, error=request.args.get("error"))
-
-@app.route('/register', methods=["GET","POST"])
-def register():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        if not add_user(form.username.data, form.password.data):
-            return redirect(url_for("register", error=True))
-
-        return redirect(url_for("login"))
-
-    return render_template("register.html", 
-        title="Register", 
-        form=form, 
-        error=request.args.get("error"))

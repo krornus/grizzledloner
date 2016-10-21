@@ -1,22 +1,19 @@
 {% extends "shared.html" %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-<form action="#" method="post" name="search">
-    {{ form.hidden_tag() }}
-    {{ form.search() }}
-    <input type="submit" value="Search">
-</form>
-
+<div class="posters">
 {% if posters %}
+    <center>
     {% for poster in posters %}
-        <img src="{{ poster }}"/>
+        <div class="poster">
+            <center>
+                <a class="poster-img" href="{{url_for("movie", id=poster[1])}}">
+                    <img class="poster-img" src="{{ poster[0] }}"/>
+                </a>
+            </center>
+        </div>
     {% endfor %}
+    </center>
 {% endif %}
-
-{% if movies %}
-    {% for movie in movies %}
-        <img src="{{ movie }}"/>
-    {% endfor %}
-{% endif %}
-
-
+</div>
 {% endblock %}
