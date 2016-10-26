@@ -107,13 +107,13 @@ def add_movie(imdbid, queueid=None):
 
     set_poster(json_data['Poster'], imdbid)
 
-def enqueue_move(queueid, imdbid):
+def enqueue_movie(queueid, imdbid):
     
     cur.execute("SELECT imdbid FROM queue WHERE imdbid = %s AND id = %s", (imdbid, queueid))  
     if cur.fetchone():
         return 
 
-    cur.execute("INSTER  INTO queue (id, imdbid) VALUES(%s, %s)", (queueid, imdbid))
+    cur.execute("INSERT INTO queue (id, imdbid) VALUES(%s, %s)", (queueid, imdbid))
     con.commit()
 
 def set_poster(url, imdbid):
