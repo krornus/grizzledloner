@@ -3,15 +3,13 @@
 {% block content %}
 <div class="description">
     <a href="#" data-toggle="modal" data-target="#poster-modal">
-        <img src="{{movie['poster']}}"/>
+        <img src="data:image/png;base64,{{view.poster}}"/>
     </a>
-    <p class="movie-title">{{movie['title']}}</p>
-    <p class="movie-director">{{movie['director']}}</p>
-    <p class="movie-plot">{{movie['plot']}}</p>
-    <p class="movie-actors">{{movie['actors']}}</p>
+    <p class="movie-title">{{view.movie['title']}}</p>
+    <p class="movie-director">{{view.movie['director']}}</p>
+    <p class="movie-plot">{{view.movie['plot']}}</p>
+    <p class="movie-actors">{{view.movie['actors']}}</p>
 </div>
-
-
 <div class="modal fade square" id="poster-modal" role="dialog">
     <div class="modal-dialog">
     
@@ -23,8 +21,8 @@
         </div>
 		<form method="post" action="{{url_for("update_poster")}}">	
 			<div class="modal-body">
-                {{form.url(placeholder="Enter poster URL...", class="wide")}}
-                {{form.imdbid(value=movie['imdbid'])}}
+                {{view.form['poster'].url(placeholder="Enter poster URL...", class="wide")}}
+                {{view.form['poster'].imdbid(value=view.movie['imdbid'])}}
 			</div>
 			<div class="modal-footer">
 			  <input type="submit" value="Accept" class="btn"/>
@@ -36,5 +34,4 @@
       
     </div>
 </div>
-  
 {% endblock %}

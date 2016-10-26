@@ -78,7 +78,7 @@ body {
     width: 300px;
     height: 440px;
     display: inline-block;
-    margin: -4px;
+    margin-right: -4px;
 }
 
 .poster center {
@@ -96,4 +96,8 @@ body {
 	margin-left: 100px;
     width: 30%;
     height: 44%;
+}
+
+.queue-text {
+    margin: 5px;
 }

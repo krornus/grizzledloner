@@ -2,13 +2,17 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="posters">
-{% if posters %}
+{% if view.posters %}
     <center>
-    {% for poster in posters %}
+    {% for poster in view.posters %}
         <div class="poster">
             <center>
                 <a class="poster-img" href="{{url_for("movie", id=poster[1])}}">
-                    <img class="poster-img" src="{{ poster[0] }}"/>
+                   {% if poster[0] %}
+                   <img class="poster-img" src="{{poster[0]}}"/>
+                   {% else %}
+                   <img class="poster-img" src="{{url_for("static", filename="no_poster.png")}}"/>
+                   {% endif %}
                 </a>
             </center>
         </div>
