@@ -26,8 +26,12 @@ def index():
 
     movies = get_movies(session['queue'][1])
     posters = [(x['poster'], x['imdbid']) for x in movies]
-    view.posters = cleanse_posters(posters)
+    posters = cleanse_posters(posters)
+    for x in range(len(movies)):
+        movies[x]["poster"] = posters[x][0]
+        movies[x]['title'] = movies[x]['title'].decode("utf8")
 
+    view.movies = movies
     view.form = {"search":MovieForm(), "queue":QueueForm()}
 
     return render_template('index.html', title="Home", view=view)
@@ -36,10 +40,11 @@ def index():
 @app.route('/add', methods=["GET", "POST"])
 def add():
 	imdbid = request.args.get("id")
+	queue = get_queue(request.args.get("queue")) or session['queue']
 	if not imdbid:
 		return redirect(url_for("index"))
-
-	add_movie(imdbid, session['queue'][1])
+    
+	add_movie(imdbid,queue[1])
 
 	return redirect(url_for("index"))
 
@@ -81,10 +86,9 @@ def movie():
     movie['plot'] = movie['plot'].decode("utf-8")
     movie['director'] = movie['director'].decode("utf-8")
 
-    view.movie = movie
+    view.movies = [movie]
     view.form['poster'] = PosterForm() 
     view.form['queue'] = QueueForm() 
-    view.poster = poster 
     view.queues = session['queues']
     view.queue = session['queue'] 
 

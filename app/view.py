@@ -1,6 +1,6 @@
 class View():
     def __init__(self):
-        self.posters = []
+        self.movies = []
         self.form = {}
         self.queues = []
         self.movie = None

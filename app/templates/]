@@ -1,0 +1,73 @@
+:c
+:x
+
+x
+
+
+
+visual
+q
+
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="description">
+    <a href="#" data-toggle="modal" data-target="#poster-modal">
+        <img src="data:image/png;base64,{{view.poster}}"/>
+    </a>
+    <div class="poster-container">
+        <div class="poster-full">
+            <img class="poster-img" src="{{view.movies[0]['poster']}}"/>
+            <div class="poster-hover">
+                <div class="poster-info-bar">
+                    <div class="poster-title">
+                        <a href="{{url_for("movie", id=view.movies[0]['imdbid'])}}">{{view.movies[0]['title']}}</a>
+                    </div>
+                    <div class="poster-btn right">
+                        <a href="{{url_for("add", id=view.movies[0]['imdbid'])}}" class="poster-btn poster-add-btn btn square">
+                            <img src="{{url_for("static", filename="add.png")}}"/>
+                        </a>
+                        <li class="dropdown poster-btn poster-add-btn">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle poster-btn btn square poster-add-btn">
+                                <img class="poster-add-dropdown-img" src="{{url_for("static", filename="add_more.png")}}"/>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-poster-add square">
+                                {% for queue in view.queues %}
+                                <li><a class="square" href="{{url_for("add", id=view.movies[0]['imdbid'], queue=queue[0])}}">{{queue[0]}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <p class="movie-title">{{view.movies[0]['title']}}</p>
+    <p class="movie-director">{{view.movies[0]['director']}}</p>
+    <p class="movie-plot">{{view.movies[0]['plot']}}</p>
+    <p class="movie-actors">{{view.movies[0]['actors']}}</p>
+</div>
+<div class="modal fade square" id="poster-modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Choose Poster...</h4>
+        </div>
+		<form method="post" action="{{url_for("update_poster")}}">	
+			<div class="modal-body">
+                {{view.form['poster'].url(placeholder="Enter poster URL...", class="wide")}}
+                {{view.form['poster'].imdbid(value=view.movies[0]['imdbid'])}}
+			</div>
+			<div class="modal-footer">
+			  <input type="submit" value="Accept" class="btn"/>
+			  <input type="submit" value="Defaults" class="btn"/>
+			  <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+			</div>
+		</form>
+      </div>
+      
+    </div>
+</div>
+{% endblock %}
