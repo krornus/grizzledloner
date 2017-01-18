@@ -1,0 +1,49 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+    <head>
+        <title>{{ title }} - GrizzledLoner</title>
+
+        <link rel="stylesheet" href="../static/css/app.css">
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+		<div data-sticky-container style="z-index:1;">
+			<div class="top-bar" data-sticky data-options="marginTop:0; hover_timeout:0;" style="width:100%">
+				<div class="top-bar-title">
+					<strong>GrizzledLoner</strong>
+				</div>
+				<div>
+					<div class="top-bar-left">
+                        <ul class="dropdown menu" data-dropdown-menu>
+                            <li>
+                                <a href="#">Queue</a>
+                                <ul class="menu vertical">
+                                    <li><a href="#">Queue Two</a></li>
+                                    <li><a href="#">Queue Three</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+					<div class="top-bar-right">
+						<ul class="menu">
+							<li><input type="search" placeholder="Find movies..."></li>
+							<li><button type="button" class="button">Search</button></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        {% block body %}{% endblock %}
+        <script src="../static/js/vendor/jquery.min.js"></script>
+        <script src="../static/js/vendor/what-input.min.js"></script>
+        <script src="../static/js/vendor/foundation.min.js"></script>
+        <script src="../static/js/app.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+    </body>
+</html>

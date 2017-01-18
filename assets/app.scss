@@ -1,0 +1,71 @@
+@import 'settings';
+@import 'foundation';
+@import 'imp';
+
+
+body {
+    background-color: get-color(dark-bg);
+}
+
+.posters-container {
+    margin: 0px 3% 0px 3%;
+    background-color: get-color(light-bg);
+    box-shadow: inset 0px 0px 20px #000;
+}
+
+.poster {
+    position: relative;
+}
+
+.poster:hover .poster-content {
+    display: flex;
+}
+
+.poster-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: linear-gradient(to top, rgba(0,0,0,.75),rgba(0,0,0,0));
+}
+
+.movie-info-container {
+    padding: 0px 3% 0px 3%;
+    height: 100%;
+}
+
+.movie-info {
+    //background-color: get-color(light-bg);
+    height: 100%;
+    //box-shadow: inset 0px 0px 5px #000;
+}
+
+.poster-info {
+    position: absolute;
+    bottom: 0px;
+    font-weight: bolder;
+    font-size: 18pt;
+    color: white;
+}
+
+.link-fill {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-title {
+    color: $light-gray;
+    font-size: 18pt;
+    font-weight: bolder;
+}
+
+.movie-poster {
+}
+
+.movie-main {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: get-color(light-bg);
+    box-shadow: inset 0px 0px 7px #000;
+}

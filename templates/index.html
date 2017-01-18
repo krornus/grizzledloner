@@ -1,0 +1,42 @@
+{% extends "shared.html" %}
+    {% block head %}{% endblock %}
+	{% block body %}
+        <div class="off-canvas-wrapper">
+            <div class="off-canvas position-right" data-transition="overlap" id="movieInfo" data-off-canvas>
+                <div class="movie-info-container">
+                    <div class="movie-info">
+                        <div class="movie-main">
+                            <div class="row">
+                                <div class="column movie-poster">
+                                    <img src="http://cdn.collider.com/wp-content/uploads/drive-movie-poster-02.jpg"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns movie-title">
+                                    Dr. Strangelove: or How I Learned to Stop Worrying and Love the Bomb
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height:1000px;" class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="row small-up-1 medium-up-3 large-up-5 posters-container expanded collapse">
+			{% for i in range(10) %}
+			<div class="column">
+				<div class="poster">
+					<div class="poster-content">
+                        <a class="link-fill" href="#" data-toggle="movieInfo">
+                            <div class="poster-info">
+                                <strong>Test</strong>
+                            </div>
+                        </a>
+					</div>
+					<img src="//placehold.it/520x770">
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	{% endblock %}
